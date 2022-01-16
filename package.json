@@ -1,0 +1,47 @@
+{
+  "name": "bitgora",
+  "version": "1.2.0",
+  "description": "BitGora",
+  "main": "server.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
+  },
+  "author": {
+    "name": "Angelica Mapeso, Ziyong He"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.7",
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-standard": "^16.0.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "prettier": "^2.1.2"
+  },
+  "dependencies": {
+    "animated-number-react": "^0.1.1",
+    "bcrypt": "^5.0.0",
+    "cloudinary": "^1.23.0",
+    "connect-flash": "^0.1.1",
+    "express": "^4.17.1",
+    "express-form-data": "^2.0.14",
+    "express-session": "^1.17.1",
+    "if-env": "^1.0.4",
+    "mongoose": "^5.11.12",
+    "mongoose-timestamp": "^0.6.0",
+    "node-pre-gyp": "^0.17.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "socket.io": "^3.1.0",
+    "socket.io-client": ""
+  }
+}
