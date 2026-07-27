@@ -22,11 +22,17 @@ const types = {
 
 const redirects = new Map([
   ["/login", "/"],
+  ["/login/", "/"],
   ["/signup", "/"],
+  ["/signup/", "/"],
   ["/profile", "/about/"],
+  ["/profile/", "/about/"],
   ["/posts", "/market/"],
+  ["/posts/", "/market/"],
   ["/post", "/market/"],
+  ["/post/", "/market/"],
   ["/chat", "/messages/"],
+  ["/chat/", "/messages/"],
   ["/messages", "/messages/"],
   ["/sell", "/sell/"],
   ["/market", "/market/"]
