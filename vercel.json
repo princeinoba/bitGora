@@ -21,7 +21,17 @@
       "permanent": true
     },
     {
+      "source": "/login/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/signup",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/signup/",
       "destination": "/",
       "permanent": true
     },
@@ -31,7 +41,17 @@
       "permanent": true
     },
     {
+      "source": "/profile/",
+      "destination": "/about/",
+      "permanent": true
+    },
+    {
       "source": "/posts",
+      "destination": "/market/",
+      "permanent": true
+    },
+    {
+      "source": "/posts/",
       "destination": "/market/",
       "permanent": true
     },
@@ -41,7 +61,17 @@
       "permanent": true
     },
     {
+      "source": "/post/",
+      "destination": "/market/",
+      "permanent": true
+    },
+    {
       "source": "/chat",
+      "destination": "/messages/",
+      "permanent": true
+    },
+    {
+      "source": "/chat/",
       "destination": "/messages/",
       "permanent": true
     },
