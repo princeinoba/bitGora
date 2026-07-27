@@ -69,8 +69,8 @@ for (const file of htmlFiles) {
   }
 
   const robot = html.match(/<meta name="robots" content="([^"]+)"/i)?.[1] || "";
-  if ((privateDemoRoutes.includes(route) || route === "/404/") && !robot.startsWith("noindex")) {
-    fail(`${route} must be noindex.`);
+  if (!robot.startsWith("noindex")) {
+    fail(`${route} must be noindex while demonstration indexing is disabled.`);
   }
 }
 
@@ -97,6 +97,10 @@ const banned = [
 ];
 for (const [needle, label] of banned) if (combined.includes(needle)) fail(`Generated output contains ${label}.`);
 
+const robotsPolicy = await readFile(join(dist, "robots.txt"), "utf8");
+if (!robotsPolicy.includes("Disallow: /") || robotsPolicy.includes("Allow: /")) fail("Demonstration robots policy must disallow crawling.");
+const sitemapPolicy = await readFile(join(dist, "sitemap.xml"), "utf8");
+if (/<url>/i.test(sitemapPolicy)) fail("Demonstration sitemap must remain empty.");
 const manifest = JSON.parse(await readFile(join(dist, "site.webmanifest"), "utf8"));
 if (manifest.name !== "BitGora Market Lab") fail("Manifest identity is incorrect.");
 if (!manifest.icons?.some(icon => icon.sizes === "192x192") || !manifest.icons?.some(icon => icon.sizes === "512x512")) fail("Manifest icons are incomplete.");

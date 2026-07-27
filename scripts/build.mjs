@@ -16,7 +16,7 @@ import {
   watchlistPage
 } from "../src/templates/pages.mjs";
 import { routeFile } from "../src/templates/helpers.mjs";
-import { productionSiteOrigin } from "../src/templates/layout.mjs";
+import { DEMO_INDEXING_ENABLED, productionSiteOrigin } from "../src/templates/layout.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const dist = resolve(root, "dist");
@@ -60,12 +60,12 @@ for (const [pathname, html] of documents) await write(routeFile(pathname), html)
 await write("404.html", notFoundPage());
 
 const origin = productionSiteOrigin();
-const robots = origin
+const robots = DEMO_INDEXING_ENABLED && origin
   ? `User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n`
   : "User-agent: *\nDisallow: /\n";
 await write("robots.txt", robots);
 
-const sitemap = origin
+const sitemap = DEMO_INDEXING_ENABLED && origin
   ? `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${publicRoutes.map(path => `  <url><loc>${origin}${path === "/" ? "/" : path}</loc></url>`).join("\n")}\n</urlset>\n`
   : `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>\n`;
 await write("sitemap.xml", sitemap);

@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { listings } from "../src/content/catalog.mjs";
 import { homePage, listingPage, marketPage, messagesPage, sellPage } from "../src/templates/pages.mjs";
+import { DEMO_INDEXING_ENABLED } from "../src/templates/layout.mjs";
 
 function count(text, pattern) {
   return [...text.matchAll(pattern)].length;
@@ -32,5 +33,20 @@ test("listing documents expose safety and inquiry boundaries", () => {
 test("local demo tools are noindex", () => {
   for (const html of [sellPage(), messagesPage()]) {
     assert.match(html, /<meta name="robots" content="noindex,nofollow">/);
+  }
+});
+
+test("production origin does not enable indexing in demonstration mode", () => {
+  const previousSiteUrl = process.env.SITE_URL;
+  process.env.SITE_URL = "https://bitgora.vercel.app";
+  try {
+    assert.equal(DEMO_INDEXING_ENABLED, false);
+    const html = homePage();
+    assert.match(html, /<meta name="robots" content="noindex,follow">/);
+    assert.doesNotMatch(html, /<meta name="robots" content="index,follow">/);
+    assert.match(html, /<link rel="canonical" href="https:\/\/bitgora\.vercel\.app\/">/);
+  } finally {
+    if (previousSiteUrl === undefined) delete process.env.SITE_URL;
+    else process.env.SITE_URL = previousSiteUrl;
   }
 });
