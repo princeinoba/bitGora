@@ -1,5 +1,7 @@
 import { escapeHtml, icon, joinUrl } from "./helpers.mjs";
 
+export const DEMO_INDEXING_ENABLED = false;
+
 const navItems = [
   { href: "/", label: "Home", page: "home" },
   { href: "/market/", label: "Market", page: "market" },
@@ -99,7 +101,7 @@ export function renderDocument({
 }) {
   const origin = resolveSiteOrigin();
   const canonical = origin ? joinUrl(origin, path) : "";
-  const indexable = Boolean(origin) && !noIndex;
+  const indexable = DEMO_INDEXING_ENABLED && Boolean(origin) && !noIndex;
   const robots = indexable ? "index,follow" : noIndex ? "noindex,nofollow" : "noindex,follow";
   const socialImage = origin ? `${origin}/assets/images/social-card.png` : "";
   const scriptTags = ["/assets/site.js", "/assets/rate.js", ...scripts]
