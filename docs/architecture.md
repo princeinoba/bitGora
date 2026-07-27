@@ -19,7 +19,7 @@ Vercel CDN
 └── Vercel Functions
     ├── GET /api/health
     └── GET /api/btc-rate
-         └── read-only Coinbase Exchange BTC-USDC × USDC-CAD ticker derivation
+         └── read-only Coinbase Exchange BTC-USDT × USDT-USDC × USDC-CAD ticker derivation
 ```
 
 There is no database, authentication, session, upload, socket, wallet, payment, custody or public mutation.
@@ -180,7 +180,7 @@ Every persisted structure is scoped to BitGora. No whole-origin clearing is used
 Browser
 → GET /api/btc-rate
 → Vercel Function
-→ GET public BTC-USDC and USDC-CAD tickers
+→ GET public BTC-USDT, USDT-USDC and USDC-CAD tickers
 ```
 
 ### Response

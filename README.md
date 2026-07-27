@@ -47,7 +47,7 @@ Vercel CDN
 └── two thin Vercel Functions
     ├── /api/health
     └── /api/btc-rate
-         └── read-only BTC-USDC × USDC-CAD ticker derivation
+         └── read-only BTC-USDT × USDT-USDC × USDC-CAD ticker derivation
 ```
 
 See [docs/architecture.md](docs/architecture.md).
@@ -155,7 +155,7 @@ The browser requests BitGora's same-origin endpoint only when the visitor asks f
 
 The Vercel Function:
 
-- requests the public BTC-USDC and USDC-CAD Exchange tickers concurrently;
+- requests the public BTC-USDT, USDT-USDC and USDC-CAD Exchange tickers concurrently;
 - derives and validates an indicative BTC/CAD price and conservative timestamp;
 - returns a normalized response;
 - never returns a wallet address or payment request;

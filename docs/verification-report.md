@@ -136,9 +136,9 @@ Verified:
 
 Verified:
 
-- Exchange-ticker-only BTC-USDC × USDC-CAD derivation;
+- Exchange-ticker-only BTC-USDT × USDT-USDC × USDC-CAD derivation;
 - GET request;
-- two-provider-response normalization and conservative timestamp selection;
+- three-response normalization and conservative timestamp selection;
 - numeric/range validation;
 - timeout/failure conversion;
 - bounded public 503 response;
@@ -409,17 +409,18 @@ for the exact deployed commits.
 
 Live verification found that Coinbase Exchange still documents the public
 product-ticker endpoint, but `BTC-CAD` is no longer present in the public product
-inventory and the direct ticker returns HTTP 404. The same inventory lists
-`BTC-USDC` and `USDC-CAD` as online.
+inventory and the direct ticker returns HTTP 404. The inventory still surfaces`n`BTC-USDC`, but its ticker identifies the product
+as delisted. The currently responsive bridge tickers are `BTC-USDT`,
+`USDT-USDC` and `USDC-CAD`.
 
-The Function therefore derives an indicative BTC/CAD reference from exactly two
-public, credential-free Coinbase Exchange product-ticker requests:
+The Function therefore derives an indicative BTC/CAD reference from exactly
+three public, credential-free Coinbase Exchange product-ticker requests:
 
 ```text
-BTC-USDC × USDC-CAD = indicative BTC-CAD
+BTC-USDT × USDT-USDC × USDC-CAD = indicative BTC-CAD
 ```
 
-Both responses are validated independently, the older valid component timestamp
+All three responses are validated independently, the older valid component`ntimestamp
 is reported, the combined result is bounded, and any component failure still
 returns the existing safe 503 response. No account, key, wallet, payment or user
 data is involved.

@@ -7,8 +7,11 @@ import { handleHealth } from "../src/server/health-handler.mjs";
 const request = (path, method = "GET") => new Request(`https://example.test${path}`, { method });
 const tickerFixture = async (url, options) => {
   assert.equal(options.method, "GET");
-  if (String(url).endsWith("/BTC-USDC/ticker")) {
+  if (String(url).endsWith("/BTC-USDT/ticker")) {
     return Response.json({ price: "100000", time: "2026-07-26T10:00:00Z" });
+  }
+  if (String(url).endsWith("/USDT-USDC/ticker")) {
+    return Response.json({ price: "0.9991", time: "2026-07-26T09:59:59Z" });
   }
   if (String(url).endsWith("/USDC-CAD/ticker")) {
     return Response.json({ price: "1.36", time: "2026-07-26T09:59:58Z" });
@@ -16,7 +19,7 @@ const tickerFixture = async (url, options) => {
   throw new Error(`Unexpected ticker URL: ${url}`);
 };
 
-test("rate service derives BTC-CAD from two public Coinbase Exchange tickers", async () => {
+test("rate service derives BTC-CAD from three public Coinbase Exchange tickers", async () => {
   const calls = [];
   const data = await fetchBtcCadRate({
     fetchFn: async (url, options) => {
@@ -25,14 +28,15 @@ test("rate service derives BTC-CAD from two public Coinbase Exchange tickers", a
     }
   });
   assert.deepEqual(calls.sort(), [
-    "https://api.exchange.coinbase.com/products/BTC-USDC/ticker",
-    "https://api.exchange.coinbase.com/products/USDC-CAD/ticker"
+    "https://api.exchange.coinbase.com/products/BTC-USDT/ticker",
+    "https://api.exchange.coinbase.com/products/USDC-CAD/ticker",
+    "https://api.exchange.coinbase.com/products/USDT-USDC/ticker"
   ]);
   assert.equal(data.pair, "BTC-CAD");
-  assert.equal(data.rate, 136000);
+  assert.ok(Math.abs(data.rate - 135877.6) < 0.000001);
   assert.equal(data.asOf, "2026-07-26T09:59:58.000Z");
   assert.equal(data.provider, "Coinbase Exchange");
-  assert.deepEqual(data.providerPairs, ["BTC-USDC", "USDC-CAD"]);
+  assert.deepEqual(data.providerPairs, ["BTC-USDT", "USDT-USDC", "USDC-CAD"]);
 });
 
 test("rate service rejects invalid and unavailable responses", async () => {
@@ -46,8 +50,8 @@ test("rate handler returns a normalized read-only payload", async () => {
   assert.equal(response.status, 200);
   const data = await response.json();
   assert.equal(data.status, "ok");
-  assert.equal(data.rate, 136000);
-  assert.deepEqual(data.providerPairs, ["BTC-USDC", "USDC-CAD"]);
+  assert.ok(Math.abs(data.rate - 135877.6) < 0.000001);
+  assert.deepEqual(data.providerPairs, ["BTC-USDT", "USDT-USDC", "USDC-CAD"]);
   assert.match(data.disclaimer, /not a quote/i);
   assert.match(response.headers.get("cache-control"), /s-maxage=60/);
 });
