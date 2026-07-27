@@ -1,54 +1,194 @@
-# BitGora
+# BitGora Market Lab
 
-![BitGora Dashboard](./img/dashboard.png)
+BitGora Market Lab is a privacy-first, non-custodial portfolio demonstration inspired by the original BitGora Bitcoin marketplace concept.
 
-BitGora is your marketplace to buy and sell goods using Bitcoin. Your dashboard will display other users' postings and your posts will be available to other users. If you see a post that you're interested in, BitGora comes with a chat function to arrange meet-ups or negotiate price.
+It preserves the strongest product idea—goods priced in Bitcoin—without pretending that a prototype can safely operate accounts, public listings, chat, wallets, payments, escrow or custody.
 
-## Purpose
+## Product boundary
 
-Bitcoin is a popular cryptocurrency, but we noticed a gap in being able to spend or gain Bitcoin without having to trade it. We wanted to extend the usage of Bitcoin and fill this gap with BitGora. BitGora provides an easier opportunity at gaining Bitcoin with smaller and more familiar transactions of buying/selling goods.
+The public site contains:
 
-Because of BitGora's chat functions, BitGora also builds a community and connects Bitcoin enthusiats together.
+- twelve fictional product listings;
+- search, category, condition, status and BTC-price filters;
+- complete listing-detail routes;
+- an optional read-only BTC/CAD reference;
+- verification-first safety guidance;
+- browser-local watchlist;
+- browser-local seller draft with 24-hour expiry and explicit JSON export;
+- browser-local inquiry text;
+- synthetic browser-local messages;
+- light, dark and system themes;
+- responsive navigation and command palette;
+- PWA manifest, install support and offline shell;
+- SEO/social metadata and security headers.
 
-<img src="./img/profile.png" alt="Your list of posts (Profile Page)" width="49%" height="auto" style="display:inline-block;">
+It does not contain:
 
-<img src="./img/chat.png" alt="A chatroom" width="49%" height="auto" style="display:inline-block;">
-
-## Starting the app locally
-
-Start by installing front and backend dependencies. While in this directory, run the following command:
-
+```text
+real users
+real listings
+real chat
+wallet connection
+payment processing
+escrow
+custody
+database
+uploads
+analytics
+advertising
 ```
-npm install
+
+## Architecture
+
+```text
+Vercel CDN
+├── generated static pages and local assets
+├── browser-local demo state
+└── two thin Vercel Functions
+    ├── /api/health
+    └── /api/btc-rate
+         └── read-only BTC-USDT × USDT-USDC × USDC-CAD ticker derivation
 ```
 
-This should install node modules within the server and the client folder.
+See [docs/architecture.md](docs/architecture.md).
 
-After both installations complete, run the following command in your terminal:
+## Routes
 
+Public:
+
+```text
+/
+ /market/
+ /market/{12-fictional-listing-slugs}/
+ /safety/
+ /about/
+ /privacy/
 ```
-npm start
+
+Local demo tools:
+
+```text
+/sell/
+ /watchlist/
+ /messages/
 ```
 
-Your app should now be running on <http://localhost:3000>.
+Local tools are `noindex,nofollow`.
 
-## Built with:
+## Requirements
 
-### Front-End
+- Node.js 24.x
+- npm
 
-- [React](https://reactjs.org/)
-- [React-Bootstrap](https://react-bootstrap.github.io/)
-- [Coindesk API](https://www.coindesk.com/coindesk-api)
-- [Socket.io (Client)](https://socket.io/)
+No external package dependency or environment secret is required.
 
-### Back-End
+## Commands
 
-- [Express](https://expressjs.com/)
-- [Mongoose](https://mongoosejs.com/)
-- [Passport](http://www.passportjs.org/)
-- [Cloudinary](https://cloudinary.com/)
-- [Socket.io (Server)](https://socket.io/)
+```bash
+npm ci --ignore-scripts
+npm run dev
+npm run lint
+npm test
+npm run build
+npm run smoke
+npm run verify
+npm run check
+```
 
-## License
+`npm run verify` is the release gate.
 
-BitGora is protected under the [**MIT License**](./LICENSE).
+It runs syntax/policy checks, tests, production build, route/asset/security validation, real HTTP smoke tests and deterministic two-build comparison.
+
+## Local development
+
+```bash
+npm ci --ignore-scripts
+npm run dev
+```
+
+Open:
+
+```text
+http://127.0.0.1:4173
+```
+
+The local server returns a deterministic BTC/CAD mock. It does not call the live provider.
+
+## Content updates
+
+Edit:
+
+```text
+src/content/catalog.mjs
+src/content/demo-messages.mjs
+```
+
+Add or update corresponding local images under:
+
+```text
+src/static/assets/images/
+```
+
+Then run:
+
+```bash
+npm run verify
+```
+
+The release gate checks routes, images, links, metadata, product boundaries and budgets.
+
+## Optional Production origin
+
+The build uses Vercel's Production URL when available.
+
+A stable approved domain can be set with:
+
+```text
+SITE_URL=https://approved-domain
+```
+
+Never use a temporary Preview URL as `SITE_URL`.
+
+## BTC/CAD reference
+
+The browser requests BitGora's same-origin endpoint only when the visitor asks for the reference or a short session cache exists.
+
+The Vercel Function:
+
+- requests the public BTC-USDT, USDT-USDC and USDC-CAD Exchange tickers concurrently;
+- derives and validates an indicative BTC/CAD price and conservative timestamp;
+- returns a normalized response;
+- never returns a wallet address or payment request;
+- uses no secret;
+- degrades safely.
+
+The estimate is not a quote or financial recommendation.
+
+## Privacy
+
+Browser state:
+
+```text
+bitgora:theme:v2
+bitgora:watchlist:v2
+bitgora:seller-draft:v2
+bitgora:messages:v1
+```
+
+Do not enter personal, payment or wallet information into demo fields.
+
+See [docs/owner-decisions.md](docs/owner-decisions.md) before adding live features.
+
+## Deployment
+
+See [DEPLOYMENT.md](DEPLOYMENT.md).
+
+## Security
+
+See [SECURITY.md](SECURITY.md).
+
+## Provenance
+
+The uploaded historical package credited Angelica Mapeso and Ziyong He and described itself as MIT-licensed, but the archive did not contain the referenced licence file.
+
+This implementation is a clean-room rebuild. See [NOTICE.md](NOTICE.md) and [docs/audit-report.md](docs/audit-report.md).

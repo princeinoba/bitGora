@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720" role="img" aria-labelledby="title desc">
+<title id="title">Limited art print set</title><desc id="desc">Original abstract product illustration for the BitGora portfolio demonstration.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3a1930"/><stop offset="1" stop-color="#df5c8b" stop-opacity=".72"/></linearGradient>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#000" flood-opacity=".28"/></filter>
+</defs>
+<rect width="960" height="720" fill="url(#bg)"/>
+<circle cx="790" cy="120" r="130" fill="#f0c808" opacity=".18"/>
+<circle cx="150" cy="630" r="180" fill="#fff" opacity=".055"/>
+<path d="M80 116h220" stroke="#fff" stroke-opacity=".18" stroke-width="2"/>
+<text x="80" y="90" fill="#fff" opacity=".75" font-family="system-ui,sans-serif" font-size="22" font-weight="700" letter-spacing="4">BITGORA MARKET LAB</text>
+<g filter="url(#shadow)"><g transform="translate(215 170)">
+<g transform="rotate(-7 110 190)"><rect width="220" height="380" rx="16" fill="#fff" stroke="#f7fbfd" stroke-width="10"/><path d="M30 300 90 160l55 85 45-130" fill="none" stroke="#df5c8b" stroke-width="34"/><circle cx="70" cy="90" r="34" fill="#f0c808"/></g>
+<g transform="translate(160 20)"><rect width="220" height="380" rx="16" fill="#fff" stroke="#f7fbfd" stroke-width="10"/><circle cx="110" cy="150" r="75" fill="#06aed5"/><path d="M35 330 185 70" stroke="#3a1930" stroke-width="30"/></g>
+<g transform="translate(335 0) rotate(7 110 190)"><rect width="220" height="380" rx="16" fill="#fff" stroke="#f7fbfd" stroke-width="10"/><rect x="35" y="45" width="150" height="95" rx="20" fill="#f0c808"/><rect x="35" y="165" width="150" height="170" rx="20" fill="#df5c8b"/></g>
+</g></g>
+<rect x="80" y="600" width="800" height="2" fill="#fff" opacity=".15"/>
+<text x="80" y="648" fill="#fff" font-family="system-ui,sans-serif" font-size="34" font-weight="800">Limited art print set</text>
+<text x="80" y="680" fill="#fff" opacity=".72" font-family="system-ui,sans-serif" font-size="19">FICTIONAL DEMO LISTING · NO REAL GOODS OFFERED</text>
+</svg>

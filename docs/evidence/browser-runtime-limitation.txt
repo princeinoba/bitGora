@@ -1,0 +1,19 @@
+# Browser runtime limitation
+
+Date: 2026-07-26
+Environment: managed Chromium at /usr/bin/chromium
+Attempted origin: http://127.0.0.1:4192/
+
+The local HTTP server was reachable and the complete HTTP smoke suite passed, but Chromium blocked navigation before application code ran:
+
+    Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR
+    URLBlocklist: ["*"]
+
+No browser policy was bypassed. Consequently, this local release does not claim real Chromium navigation, pointer/keyboard interaction, runtime CSP-console cleanliness, service-worker/offline behaviour, automated axe results, screenshots, or Lighthouse scores. Those checks are mandatory on the Vercel Preview.
+
+Compensating evidence completed locally:
+- Static semantic document validation for every route.
+- 33 automated unit/template/service tests.
+- 108 real HTTP assertions against the production-style local server.
+- Content, link, asset, metadata, image, security configuration, and output-budget validation.
+- Deterministic two-build comparison.
