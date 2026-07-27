@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720" role="img" aria-labelledby="title desc">
+<title id="title">Compact mechanical keyboard</title><desc id="desc">Original abstract product illustration for the BitGora portfolio demonstration.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0d2b3a"/><stop offset="1" stop-color="#06aed5" stop-opacity=".72"/></linearGradient>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#000" flood-opacity=".28"/></filter>
+</defs>
+<rect width="960" height="720" fill="url(#bg)"/>
+<circle cx="790" cy="120" r="130" fill="#f0c808" opacity=".18"/>
+<circle cx="150" cy="630" r="180" fill="#fff" opacity=".055"/>
+<path d="M80 116h220" stroke="#fff" stroke-opacity=".18" stroke-width="2"/>
+<text x="80" y="90" fill="#fff" opacity=".75" font-family="system-ui,sans-serif" font-size="22" font-weight="700" letter-spacing="4">BITGORA MARKET LAB</text>
+<g filter="url(#shadow)"><g transform="translate(210 220) rotate(-4 270 130)">
+<rect x="0" y="0" rx="34" width="540" height="260" fill="#eaf7fb" stroke="#fff" stroke-width="8"/>
+<g fill="#102a38"><rect x="35" y="35" rx="7" width="35" height="35"/><rect x="82" y="35" rx="7" width="35" height="35"/><rect x="129" y="35" rx="7" width="35" height="35"/><rect x="176" y="35" rx="7" width="35" height="35"/><rect x="223" y="35" rx="7" width="35" height="35"/><rect x="270" y="35" rx="7" width="35" height="35"/><rect x="317" y="35" rx="7" width="35" height="35"/><rect x="364" y="35" rx="7" width="35" height="35"/><rect x="411" y="35" rx="7" width="35" height="35"/><rect x="458" y="35" rx="7" width="35" height="35"/><rect x="35" y="85" rx="7" width="35" height="35"/><rect x="82" y="85" rx="7" width="35" height="35"/><rect x="129" y="85" rx="7" width="35" height="35"/><rect x="176" y="85" rx="7" width="35" height="35"/><rect x="223" y="85" rx="7" width="35" height="35"/><rect x="270" y="85" rx="7" width="35" height="35"/><rect x="317" y="85" rx="7" width="35" height="35"/><rect x="364" y="85" rx="7" width="35" height="35"/><rect x="411" y="85" rx="7" width="35" height="35"/><rect x="458" y="85" rx="7" width="35" height="35"/><rect x="35" y="135" rx="7" width="35" height="35"/><rect x="82" y="135" rx="7" width="35" height="35"/><rect x="129" y="135" rx="7" width="35" height="35"/><rect x="176" y="135" rx="7" width="35" height="35"/><rect x="223" y="135" rx="7" width="35" height="35"/><rect x="270" y="135" rx="7" width="35" height="35"/><rect x="317" y="135" rx="7" width="35" height="35"/><rect x="364" y="135" rx="7" width="35" height="35"/><rect x="411" y="135" rx="7" width="35" height="35"/><rect x="458" y="135" rx="7" width="35" height="35"/><rect x="35" y="185" rx="7" width="35" height="35"/><rect x="82" y="185" rx="7" width="35" height="35"/><rect x="129" y="185" rx="7" width="35" height="35"/><rect x="176" y="185" rx="7" width="35" height="35"/><rect x="223" y="185" rx="7" width="35" height="35"/><rect x="270" y="185" rx="7" width="35" height="35"/><rect x="317" y="185" rx="7" width="35" height="35"/><rect x="364" y="185" rx="7" width="35" height="35"/><rect x="411" y="185" rx="7" width="35" height="35"/><rect x="458" y="185" rx="7" width="35" height="35"/></g>
+<rect x="365" y="185" width="125" height="32" rx="8" fill="#f0c808"/>
+</g></g>
+<rect x="80" y="600" width="800" height="2" fill="#fff" opacity=".15"/>
+<text x="80" y="648" fill="#fff" font-family="system-ui,sans-serif" font-size="34" font-weight="800">Compact mechanical keyboard</text>
+<text x="80" y="680" fill="#fff" opacity=".72" font-family="system-ui,sans-serif" font-size="19">FICTIONAL DEMO LISTING · NO REAL GOODS OFFERED</text>
+</svg>
