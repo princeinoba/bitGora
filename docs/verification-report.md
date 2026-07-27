@@ -136,9 +136,9 @@ Verified:
 
 Verified:
 
-- BTC-CAD endpoint selection;
+- Exchange-ticker-only BTC-USDC × USDC-CAD derivation;
 - GET request;
-- provider response normalization;
+- two-provider-response normalization and conservative timestamp selection;
 - numeric/range validation;
 - timeout/failure conversion;
 - bounded public 503 response;
@@ -366,7 +366,7 @@ CSS: 38,737 bytes
 HTTP release assertions: 108 passed
 Deterministic SHA-256: 4a6e73ed2c9d00d29393bca56acc391b95cb039d63cac4a4dda3b1dba1d13c49
 Clean-room npm ci/audit/verify: passed
-Independent secret scan: 239 text/source/generated files, 0 findings
+Independent secret scan: 243 text/source/generated files, 0 findings
 ```
 
 Bundled headless Chromium completed 84 route/viewport combinations across all
@@ -405,3 +405,21 @@ The SEO score is interpreted as expected because the owner-approved portfolio
 release intentionally remains `noindex`. Preview and Production Lighthouse,
 live Coinbase, public-access and deployment-identity evidence remain mandatory
 for the exact deployed commits.
+## Coinbase Exchange pair compatibility — 2026-07-27
+
+Live verification found that Coinbase Exchange still documents the public
+product-ticker endpoint, but `BTC-CAD` is no longer present in the public product
+inventory and the direct ticker returns HTTP 404. The same inventory lists
+`BTC-USDC` and `USDC-CAD` as online.
+
+The Function therefore derives an indicative BTC/CAD reference from exactly two
+public, credential-free Coinbase Exchange product-ticker requests:
+
+```text
+BTC-USDC × USDC-CAD = indicative BTC-CAD
+```
+
+Both responses are validated independently, the older valid component timestamp
+is reported, the combined result is bounded, and any component failure still
+returns the existing safe 503 response. No account, key, wallet, payment or user
+data is involved.

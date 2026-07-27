@@ -5,19 +5,34 @@ import { handleBtcRate } from "../src/server/rate-handler.mjs";
 import { handleHealth } from "../src/server/health-handler.mjs";
 
 const request = (path, method = "GET") => new Request(`https://example.test${path}`, { method });
+const tickerFixture = async (url, options) => {
+  assert.equal(options.method, "GET");
+  if (String(url).endsWith("/BTC-USDC/ticker")) {
+    return Response.json({ price: "100000", time: "2026-07-26T10:00:00Z" });
+  }
+  if (String(url).endsWith("/USDC-CAD/ticker")) {
+    return Response.json({ price: "1.36", time: "2026-07-26T09:59:58Z" });
+  }
+  throw new Error(`Unexpected ticker URL: ${url}`);
+};
 
-test("rate service normalizes Coinbase ticker data", async () => {
+test("rate service derives BTC-CAD from two public Coinbase Exchange tickers", async () => {
+  const calls = [];
   const data = await fetchBtcCadRate({
     fetchFn: async (url, options) => {
-      assert.match(String(url), /BTC-CAD\/ticker$/);
-      assert.equal(options.method, "GET");
-      return Response.json({ price: "101234.56", time: "2026-07-26T10:00:00Z" });
+      calls.push(String(url));
+      return tickerFixture(url, options);
     }
   });
+  assert.deepEqual(calls.sort(), [
+    "https://api.exchange.coinbase.com/products/BTC-USDC/ticker",
+    "https://api.exchange.coinbase.com/products/USDC-CAD/ticker"
+  ]);
   assert.equal(data.pair, "BTC-CAD");
-  assert.equal(data.rate, 101234.56);
-  assert.equal(data.asOf, "2026-07-26T10:00:00.000Z");
+  assert.equal(data.rate, 136000);
+  assert.equal(data.asOf, "2026-07-26T09:59:58.000Z");
   assert.equal(data.provider, "Coinbase Exchange");
+  assert.deepEqual(data.providerPairs, ["BTC-USDC", "USDC-CAD"]);
 });
 
 test("rate service rejects invalid and unavailable responses", async () => {
@@ -27,13 +42,12 @@ test("rate service rejects invalid and unavailable responses", async () => {
 });
 
 test("rate handler returns a normalized read-only payload", async () => {
-  const response = await handleBtcRate(request("/api/btc-rate"), {
-    fetchFn: async () => Response.json({ price: "100000", time: "2026-07-26T10:00:00Z" })
-  });
+  const response = await handleBtcRate(request("/api/btc-rate"), { fetchFn: tickerFixture });
   assert.equal(response.status, 200);
   const data = await response.json();
   assert.equal(data.status, "ok");
-  assert.equal(data.rate, 100000);
+  assert.equal(data.rate, 136000);
+  assert.deepEqual(data.providerPairs, ["BTC-USDC", "USDC-CAD"]);
   assert.match(data.disclaimer, /not a quote/i);
   assert.match(response.headers.get("cache-control"), /s-maxage=60/);
 });
